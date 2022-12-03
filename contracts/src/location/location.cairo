@@ -1,8 +1,7 @@
 %lang starknet
 
-%builtins pedersen range_check ecdsa
-
 from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
+from starkware.starknet.common.syscalls import get_caller_address
 
 @storage_var
 func _wallet_location( wallet ) -> (wallet_location: felt) {
@@ -33,7 +32,7 @@ func _insecure_set_wallet_location{syscall_ptr: felt*, pedersen_ptr: HashBuiltin
 func set_wallet_location{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
     wallet: felt, location: felt
 ) {
-    let (owner) = owner.read();
+    let (owner) = _owner.read();
     let (caller) = get_caller_address();
     assert caller = owner;
 
@@ -44,5 +43,6 @@ func set_wallet_location{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_c
 
 @view
 func get_wallet_location{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(wallet: felt) -> (location: felt) {
-    return _wallet_location.read( wallet );
+    let (location) = _wallet_location.read( wallet );
+    return (location=location);
 }

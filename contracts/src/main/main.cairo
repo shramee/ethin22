@@ -9,7 +9,7 @@ from starkware.cairo.common.math_cmp import is_le
 from starkware.cairo.common.signature import verify_ecdsa_signature
 from starkware.starknet.common.syscalls import get_tx_signature
 
-from src.voting.register import registered_voters, register_voter, get_is_voter_registered
+from src.main.register import registered_voters, register_voter, get_is_voter_registered
 
 // Poll ID is IPFS hash
 struct Poll {

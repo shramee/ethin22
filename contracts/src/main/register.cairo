@@ -1,7 +1,5 @@
 %lang starknet
 
-%builtins pedersen range_check ecdsa
-
 from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
 
 // A storage_var can accept a Tuple (poll_id, voter_public_key) and return a single felt.
