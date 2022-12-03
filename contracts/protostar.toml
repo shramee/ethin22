@@ -2,7 +2,12 @@
 protostar-version = "0.8.1"
 lib-path = "lib"
 
+gateway-url = "http://127.0.0.1:5050/"
+chain-id = "1536727068981429685321"
+
 [contracts]
 location = ["src/location/location.cairo"]
-main = ["src/voting/main.cairo"]
+main = ["src/main/main.cairo"]
 
+# Commands
+# protostar deploy build/location.json -i 0x15d52f6bdbd10fbe0d01eee5b9cf89bc6dcc5ee8334ea04d09e57b53131974c
