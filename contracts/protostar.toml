@@ -4,4 +4,5 @@ lib-path = "lib"
 
 [contracts]
 location = ["src/location/location.cairo"]
+main = ["src/voting/main.cairo"]
 
