@@ -4,12 +4,9 @@ import App from './App';
 import ThemeProvider from './ThemeProvider';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Deploy from './pages/Deploy';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import Poll from './pages/Poll';
 import PollNew from './pages/PollNew';
 import NotFound from './pages/NotFound';
-
 ReactDOM.render(
   <ThemeProvider>
     <BrowserRouter>
