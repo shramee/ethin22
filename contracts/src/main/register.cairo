@@ -12,6 +12,7 @@ func registered_members(voter_public_key: felt) -> (is_registered: felt) {
 func register_voter{
     syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr
 }(voter_public_key: felt) {
+    // This would include calling another contract to verify location
     registered_members.write(voter_public_key=voter_public_key, value=1);
     return ();
 }

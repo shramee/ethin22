@@ -21,7 +21,11 @@ struct Poll {
 
 // Stores a map for ID of the Poll -> Public Key of the owner who created the poll
 @storage_var
-func poll_details(poll_ipfs: felt) -> (public_key: felt) {
+func poll_details(poll_ipfs: felt) -> (Poll: Poll) {
+}
+
+@storage_var
+func poll_indices(index: felt) -> (Poll: Poll) {
 }
 
 @storage_var
@@ -36,26 +40,34 @@ func voter_state(poll_ipfs: felt, voter_public_key: felt) -> (has_voted: felt) {
 func exams( wallet: felt ) -> (address: felt) {
 }
 
+@storage_var
+func department_data( key: felt ) -> (res: felt) {
+}
+
+
 @constructor
 func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    exam_ipfs_hash: felt, exam_solution: felt, genesis_account: felt
+    exam_ipfs_hash: felt, exam_solution: felt, solution_salt: felt, genesis_account: felt
 ) {
+    exams.write('exam', exam_ipfs_hash);
     department_data.write('exam', exam_ipfs_hash);
+    department_data.write('number_of_polls', 0);
     department_data.write('exam', exam_ipfs_hash);
-    registered_members.write(genesis_account, value=1);    
+    registered_members.write(genesis_account, value=1); 
     return ();
 }
 
 @external
 func init_poll{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    poll_ipfs: felt, n_options: felt, action: felt, payload: felt,
+    poll_ipfs: felt, n_options: felt, action: felt, payload: felt
 ) -> (result: felt) {
+    alloc_locals;
     let (is_poll_id_taken) = poll_details.read(poll_ipfs);
 
     // Verify that the poll ID is available.
-    assert is_poll_id_taken = 0;
+    assert is_poll_id_taken.initiator = 0;
 
-    let (initiator) = get_caller_address(poll_ipfs);
+    let (initiator) = get_caller_address();
 
     let poll_deets = Poll(
         initiator=initiator,
@@ -66,6 +78,11 @@ func init_poll{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
     );
 
     poll_details.write(poll_ipfs, poll_deets);
+    
+    let (number_of_polls) = department_data.read('number_of_polls');
+    
+    poll_indices.write( number_of_polls, poll_deets );
+    department_data.write('number_of_polls', number_of_polls + 1 );
     return (result=1);
 }
 
