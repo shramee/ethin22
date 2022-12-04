@@ -45,7 +45,7 @@ export default function Sidebar({drawerOpen, drawerToggle, drawerTransition, dra
         <List sx={{overflow: 'auto'}}>
           <SidebarBtn Icon={CheckCircle} label={'Polls'} to="/" />
           <SidebarBtn Icon={AddCircle} label={'Add poll'} to="/new" />
-          <SidebarBtn Icon={RocketLaunch} label={'Deploy account'} to="/deploy" />
+          {/*<SidebarBtn Icon={RocketLaunch} label={'Deploy account'} to="/deploy" />*/}
         </List>
 
         <List sx={{mt: 'auto'}}>
