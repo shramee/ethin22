@@ -20,6 +20,30 @@ The ministries each have a contract which automated [registration](#how-are-user
 
 The challenge of competence of participating voters is met with a basic quiz covering prerequisites to be able to govern effectively.
 
+## Challenges
+
+Having the quiz was really complicated, we want to be able to check the quizzes online but it was challenging because the number of possibilities of input wouldn't be infinite and it'd be possible to try the combinations. Adding a salt wouldn't work either because salt can not be stored privately.
+
+### Using VDF (Verifiable Delay Function)
+
+We start with a secure random salt and use it to hash the solution. This salt is then passed through a VD function before it’s saved on chain. Making it really expensive to calculate backwards.
+
+This keeps the solution safe for a while until VDF’s delay is exceeded. Because of the nature of quiz staying up for long periods of time this is not viable. Not to mention we need to delegate computation resources for the entire delay period to check the results.
+
+Remnants of the code for this can be found in `contracts/src/vdf`
+
+### Solving with privately held salts
+
+First member of the contract submits a quiz, the solution to the quiz is hashed with a private salt which is never saved on chain.
+
+The applicants keep solving and their solutions are saved as jobs for later resolution, at a later point the original quiz master (ideally an expert in the field) periodically sends their private salt to the chain help evaluate the pending jobs for evaluating applicants.
+
+To promote decentralization in this approach multiple quiz masters can participate, participants can be assigned a new test from another expert in case the original poster is not available to provide the solution salt in an acceptable timeframe.
+
+One of my very educated friends tell me that this is what is referred to as **commitment schemes**.
+
+This part is a work in progress.
+
 ---
 
 ## FAQ
